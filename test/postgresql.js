@@ -6,7 +6,7 @@ var request = require('supertest');
 var assert = require('assert');
 var express = require('express');
 var util = require('../src/util');
-var chance = (new require('chance'))(); // eslint-disable-line new-cap
+var chance = new require('chance')(); // eslint-disable-line new-cap
 var config = {
   type: 'postgresql',
   db: {
@@ -23,19 +23,19 @@ var sql = null;
 
 describe('resquel tests', function() {
   var called = {
-    'POST': [],
-    'GET': [],
-    'PUT': [],
-    'DELETE': [],
-    'INDEX': []
+    POST: [],
+    GET: [],
+    PUT: [],
+    DELETE: [],
+    INDEX: []
   };
 
   describe('bootstrap routes', function() {
     it('add before/after route functions', function(done) {
       config.routes.forEach(function(route) {
         var type = route.method.toString().toUpperCase();
-        if (type === 'GET' && (route.endpoint.indexOf('/:') === -1)) {
-          type = 'INDEX'
+        if (type === 'GET' && route.endpoint.indexOf('/:') === -1) {
+          type = 'INDEX';
         }
 
         route.before = function(req, res, next) {
@@ -45,7 +45,7 @@ describe('resquel tests', function() {
         route.after = function(req, res, next) {
           called[type].push('after');
           next();
-        }
+        };
       });
       done();
     });
@@ -66,7 +66,8 @@ describe('resquel tests', function() {
       temp.user = 'postgres';
       temp.password = 'postgres';
       temp.database = 'postgres';
-      sql.connect(temp)
+      sql
+        .connect(temp)
         .then(function() {
           return done();
         })
@@ -77,7 +78,8 @@ describe('resquel tests', function() {
     });
 
     it('use plsql', function(done) {
-      sql.request('CREATE OR REPLACE LANGUAGE plpgsql;')
+      sql
+        .request('CREATE OR REPLACE LANGUAGE plpgsql;')
         .then(function() {
           return done();
         })
@@ -87,7 +89,8 @@ describe('resquel tests', function() {
     });
 
     it('clear the test db', function(done) {
-      sql.request('DROP DATABASE IF EXISTS test')
+      sql
+        .request('DROP DATABASE IF EXISTS test')
         .then(function() {
           return done();
         })
@@ -98,7 +101,8 @@ describe('resquel tests', function() {
     });
 
     it('clear the test user', function(done) {
-      sql.request('DROP USER test')
+      sql
+        .request('DROP USER test')
         .then(function() {
           return done();
         })
@@ -109,7 +113,8 @@ describe('resquel tests', function() {
     });
 
     it('create the test user', function(done) {
-      sql.request('CREATE USER test WITH PASSWORD \'test\'')
+      sql
+        .request("CREATE USER test WITH PASSWORD 'test'")
         .then(function() {
           return done();
         })
@@ -119,7 +124,8 @@ describe('resquel tests', function() {
     });
 
     it('create the test db', function(done) {
-      sql.request('CREATE DATABASE test WITH OWNER \'test\'')
+      sql
+        .request("CREATE DATABASE test WITH OWNER 'test'")
         .then(function() {
           return done();
         })
@@ -130,7 +136,8 @@ describe('resquel tests', function() {
     });
 
     it('connect to the test db', function(done) {
-      sql.connect(config.db)
+      sql
+        .connect(config.db)
         .then(function() {
           return done();
         })
@@ -141,24 +148,25 @@ describe('resquel tests', function() {
     });
 
     it('create the test table', function(done) {
-      sql.request(
-        'CREATE TABLE customers' +
-        '(' +
-          'id serial,' +
-          '"firstName" text,' +
-          '"lastName" text,' +
-          'email text,' +
-          'PRIMARY KEY ("id"),' +
-          'UNIQUE ("id")' +
-        ')' +
-        'TABLESPACE "pg_default";'
-      )
-      .then(function() {
-        return done();
-      })
-      .catch(function(err) {
-        return done(err);
-      })
+      sql
+        .request(
+          'CREATE TABLE customers' +
+            '(' +
+            'id serial,' +
+            '"firstName" text,' +
+            '"lastName" text,' +
+            'email text,' +
+            'PRIMARY KEY ("id"),' +
+            'UNIQUE ("id")' +
+            ')' +
+            'TABLESPACE "pg_default";'
+        )
+        .then(function() {
+          return done();
+        })
+        .catch(function(err) {
+          return done(err);
+        });
     });
   });
 
