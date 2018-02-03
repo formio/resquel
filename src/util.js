@@ -16,7 +16,8 @@ var debug = {
  *   The escaped query.
  */
 var escape = function(query) {
-  return query.replace(/[\0\n\r\b\t\\\'\"\x1a]/g, function(s) { // eslint-disable-line no-control-regex
+  return query.replace(/[\0\n\r\b\t\\\'\"\x1a]/g, function(s) {
+    // eslint-disable-line no-control-regex
     switch (s) {
       case '\0':
         return '\\0';
@@ -86,7 +87,7 @@ var queryReplace = function(data) {
     }
 
     // Get the token for replacement.
-    value = _.get(data, args[1]);
+    value = _.get({data}, args[1]);
 
     // Make sure we only set the strings or numbers.
     switch (typeof value) {
@@ -113,7 +114,7 @@ var queryReplace = function(data) {
  * @returns {Promise}
  */
 var before = function before(route, req, res) {
-  if (!route.hasOwnProperty('before') || (typeof route.before !== 'function')) {
+  if (!route.hasOwnProperty('before') || typeof route.before !== 'function') {
     return Q();
   }
 
@@ -140,7 +141,7 @@ var before = function before(route, req, res) {
  * @returns {Promise}
  */
 var after = function after(route, req, res) {
-  if (!route.hasOwnProperty('after') || (typeof route.after !== 'function')) {
+  if (!route.hasOwnProperty('after') || typeof route.after !== 'function') {
     // Send the result.
     res.status(res.result.status).send(res.result);
     return;
