@@ -86,7 +86,8 @@ var queryReplace = function(data) {
     }
 
     // Get the token for replacement.
-    value = _.get(data, args[1]);
+    var key = args[1].split(".")[1];
+    value = _.get(data, key);
 
     // Make sure we only set the strings or numbers.
     switch (typeof value) {
