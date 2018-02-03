@@ -1,6 +1,6 @@
 {
-  "name": "resquel",
-  "version": "1.0.0",
+  "name": "restfulsql",
+  "version": "1.1.0",
   "description": "Easily convert a SQL database into a REST API using Express.js.",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,11 @@
     "postgresql": "mocha -t 20000 -b test/postgresql.js",
     "lint": "eslint ."
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sayegh7/resquel"
+  },
+  "author": "Ahmed El Sayegh",
   "license": "ISC",
   "dependencies": {
     "basic-auth-connect": "^1.0.0",
