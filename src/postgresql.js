@@ -37,6 +37,10 @@ module.exports = function(util) {
       configuration.database = _.get(config, 'database');
     }
 
+    if (_.has(config, 'ssl')) {
+      configuration.ssl = _.get(config, 'ssl');
+    }
+
     debug(configuration);
     var db = new sql.Client(configuration);
     return Q.ninvoke(db, 'connect')
