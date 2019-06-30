@@ -5,6 +5,9 @@ var _ = require('lodash');
 var sql = require('pg');
 var debug = require('debug')('resquel:postgresql');
 
+// Disable automatic date parsing by node-postgres and parse dates in your application
+sql.types.setTypeParser(1114, str => new Date(str + 'Z').toISOString());
+
 module.exports = function(util) {
   var connection = null;
 
