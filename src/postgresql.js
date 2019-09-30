@@ -45,7 +45,7 @@ module.exports = function(util) {
     }
 
     debug(configuration);
-    var db = new sql.Client(configuration);
+    var db = new sql.Pool(configuration);
     return Q.ninvoke(db, 'connect')
       .then(function() {
         connection = db;
