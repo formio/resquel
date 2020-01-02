@@ -28,6 +28,8 @@ var escape = function(query) {
         return '\\b';
       case '\t':
         return '\\t';
+      case '\'':
+        return '\'\'';
       case '\x1a':
         return '\\Z';
       default:
