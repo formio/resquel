@@ -25,12 +25,12 @@
     },
     {
       "method": "get",
-      "endpoint": "/customer/:customerId",
-      "query": ["SELECT * FROM customers WHERE id=?", "params.customerId"]
+      "endpoint": "/customer/:id",
+      "query": ["SELECT * FROM customers WHERE id=?", "params.id"]
     },
     {
       "method": "put",
-      "endpoint": "/customer/:customerId",
+      "endpoint": "/customer/:id",
       "query": [
         [
           "UPDATE customers SET firstName=?, lastName=?, email=? WHERE id=? RETURNING *",
@@ -39,13 +39,13 @@
           "body.data.email",
           "params.customerId"
         ],
-        ["SELECT * FROM customers WHERE id=?", "params.customerId"]
+        ["SELECT * FROM customers WHERE id=?", "params.id"]
       ]
     },
     {
       "method": "delete",
-      "endpoint": "/customer/:customerId",
-      "query": ["DELETE FROM customers WHERE id=?", "params.customerId"]
+      "endpoint": "/customer/:id",
+      "query": ["DELETE FROM customers WHERE id=?", "params.id"]
     }
   ]
 }

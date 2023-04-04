@@ -4,7 +4,7 @@
     "connection": {
       "host": "localhost",
       "user": "root",
-      "password": "password"
+      "password": "CHANGEME"
     }
   },
   "routes": [{
@@ -27,27 +27,27 @@
     },
     {
       "method": "get",
-      "endpoint": "/customer/:customerId",
-      "query": ["SELECT * FROM customers WHERE id=?", "params.customerId"]
+      "endpoint": "/customer/:id",
+      "query": ["SELECT * FROM customers WHERE id=?", "params.id"]
     },
     {
       "method": "put",
-      "endpoint": "/customer/:customerId",
+      "endpoint": "/customer/:id",
       "query": [
         [
           "UPDATE customers SET firstName=?, lastName=?, email=? WHERE id=?",
           "body.data.firstName",
           "body.data.lastName",
           "body.data.email",
-          "params.customerId"
+          "params.id"
         ],
-        ["SELECT * FROM customers WHERE id=?", "params.customerId"]
+        ["SELECT * FROM customers WHERE id=?", "params.id"]
       ]
     },
     {
       "method": "delete",
-      "endpoint": "/customer/:customerId",
-      "query": ["DELETE FROM customers WHERE id=?", "params.customerId"]
+      "endpoint": "/customer/:id",
+      "query": ["DELETE FROM customers WHERE id=?", "params.id"]
     }
   ]
 }

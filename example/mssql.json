@@ -27,27 +27,27 @@
     },
     {
       "method": "get",
-      "endpoint": "/customer/:customerId",
-      "query": ["SELECT * FROM test.dbo.customers WHERE id=?", "params.customerId"]
+      "endpoint": "/customer/:id",
+      "query": ["SELECT * FROM test.dbo.customers WHERE id=?", "params.id"]
     },
     {
       "method": "put",
-      "endpoint": "/customer/:customerId",
+      "endpoint": "/customer/:id",
       "query": [
         [
           "UPDATE test.dbo.customers SET firstName='?', lastName='?', email='?' WHERE id=?",
           "body.data.firstName",
           "body.data.lastName",
           "body.data.email",
-          "params.customerId"
+          "params.id"
         ],
-        ["SELECT * FROM test.dbo.customers WHERE id=?", "params.customerId"]
+        ["SELECT * FROM test.dbo.customers WHERE id=?", "params.id"]
       ]
     },
     {
       "method": "delete",
-      "endpoint": "/customer/:customerId",
-      "query": ["DELETE FROM test.dbo.customers WHERE id=?", "params.customerId"]
+      "endpoint": "/customer/:id",
+      "query": ["DELETE FROM test.dbo.customers WHERE id=?", "params.id"]
     }
   ]
 }

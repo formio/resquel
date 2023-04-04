@@ -2,22 +2,34 @@
   "db": {
     "client": "mysql",
     "connection": {
-      "host": "127.0.0.1",
-      "user": "your_database_user",
-      "password": "your_database_password",
-      "database": "myapp_test"
+      "host": "localhost",
+      "user": "root",
+      "password": "CHANGEME",
+      "database": "formio"
     }
   },
   "routes": [
     {
       "method": "get",
       "endpoint": "/customer",
-      "query": "SELECT * FROM customers;"
+      "query": [
+        ["SELECT * FROM customers;"]
+      ]
     },
     {
       "method": "post",
       "endpoint": "/customer",
-      "query": "INSERT INTO customers (firstName, lastName, email) VALUES ('{{ data.firstName }}', '{{ data.lastName }}', '{{ data.email }}');SELECT * FROM customers WHERE id=SCOPE_IDENTITY();"
+      "query": [
+        [
+          "INSERT INTO customers (firstName, lastName, email) VALUES (?, ?, ?)",
+          "body.data.firstName",
+          "body.data.lastName",
+          "body.data.email"
+        ],
+        [
+          "SELECT * FROM customers WHERE id=LAST_INSERT_ID();"
+        ]
+      ]
     },
     {
       "method": "get",
