@@ -2,7 +2,7 @@ import request from 'supertest';
 import assert from 'assert';
 import express from 'express';
 import { Resquel, ResquelConfig } from '../src/resquel';
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const config: ResquelConfig = require('../example/mssql.json');

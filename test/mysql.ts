@@ -1,7 +1,7 @@
 import request from 'supertest';
 import assert from 'assert';
 import express from 'express';
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 import { Resquel, ResquelConfig } from '../src/resquel';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires

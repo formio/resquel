@@ -2,7 +2,7 @@ import _, { AnyKindOfDictionary } from 'lodash';
 import basicAuth from 'basic-auth-connect';
 import bodyParser from 'body-parser';
 import express from 'express';
-import knex from 'knex';
+import knex, { Knex } from 'knex';
 import logger from './log';
 import methodOverride from 'method-override';
 import { Request, Response } from 'express';
@@ -24,12 +24,13 @@ export declare type PreparedQuery = [string, ...(string | QueryParamLookup)[]];
 
 type ConfigRouteQuery = string | PreparedQuery | PreparedQuery[];
 
-export declare type QueryParamLookup = ({
-  knex: knex,
+export declare type QueryParam = {
+  knex: Knex,
   resquel: Resquel,
   req: Request,
-  res: Response,
-}) => Promise<string>;
+  res: Response
+};
+export declare type QueryParamLookup = (param: QueryParam) => Promise<string>;
 
 export declare type ConfigRoute = {
   method: ConfigRouteMethods;
@@ -57,13 +58,13 @@ export declare type ResquelAuth = {
 
 export declare type ResquelConfig = {
   port?: number;
-  db: knex.Config<unknown>;
+  db: Knex.Config<unknown>;
   routes: ConfigRoute[];
   auth?: ResquelAuth;
 };
 
 export class Resquel {
-  public knexClient: knex;
+  public knexClient: Knex;
   public readonly router: express.Router = express.Router();
 
   constructor(private resquelConfig: ResquelConfig) {}
@@ -162,8 +163,8 @@ export class Resquel {
   protected async processRouteQuery(
     routeQuery: ConfigRouteQuery,
     req: Request,
-    knexClient: knex,
-  ): Promise<ErrorCodes | knex.Raw<unknown>> {
+    knexClient: Knex,
+  ): Promise<ErrorCodes | Knex.Raw<unknown>> {
     // Resolve route query into an array of prepared statements.
     // Example:
     //   ["SELECT * FROM customers WHERE id=?", "params.customerId"]
@@ -279,7 +280,7 @@ export class Resquel {
   }
 
   protected resultProcess(
-    knexClient: knex,
+    knexClient: Knex,
     result: AnyKindOfDictionary,
   ): AnyKindOfDictionary[] {
     switch (knexClient.client.config.client as ConnectionType) {
