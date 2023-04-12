@@ -186,7 +186,8 @@ const app = express();
                   'UPDATE customers SET firstName=?, lastName=?, email=? WHERE id=?',
                   'body.data.firstName',
                   'body.data.lastName',
-                  'body.data.email'
+                  'body.data.email',
+                  'params.id'
                 ],
                 [
                   'SELECT * FROM customers WHERE id=?',
