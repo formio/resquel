@@ -1,5 +1,5 @@
 {
-  "name": "resquel",
+  "name": "@formio/resquel",
   "version": "2.1.0-rc.2",
   "description": "Easily convert a SQL database into a REST API using Express.js.",
   "main": "./lib/resquel.js",
